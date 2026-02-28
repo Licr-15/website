@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="C++R程序开发 - 提供代码调试、脚本开发、小程序制作与AI创作服务">
+  <meta name="keywords" content="代码调试,脚本开发,小程序开发,AI创作,程序开发">
+  <title>C++R程序开发</title>
+  <style>
+    /* 重置样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 全局样式 - 黑色酷炫主题 */
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 15px;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    /* 霓虹发光卡片 */
+    .neon-card {
+      background: linear-gradient(145deg, #1a1a2e, #16213e);
+      border: 1px solid #00d9ff;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.3),
+                  inset 0 0 10px rgba(0, 217, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .neon-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+      animation: glow 3s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* 标题样式 */
+    .title {
+      font-size: 24px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #00d9ff 0%, #7b2cbf 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-weight: 700;
+      color: #00d9ff;
+      margin: 16px 0 10px 0;
+      text-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .content {
+      font-size: 14px;
+      color: #b8b8d1;
+      line-height: 1.8;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 服务项目卡片 */
+    .service-card {
+      background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+      border: 1px solid #00d9ff;
+      border-radius: 10px;
+      padding: 18px;
+      margin: 12px 0;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4),
+                  0 0 10px rgba(0, 217, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 75px;
+      height: 75px;
+      background: radial-gradient(circle, rgba(123, 44, 191, 0.3) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .service-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #00d9ff;
+      margin-bottom: 8px;
+      text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      color: #b8b8d1;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 图标样式 */
+    .icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+      display: block;
+      text-align: center;
+      filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.8));
+    }
+
+    /* 联系信息 */
+    .contact-item {
+      background: linear-gradient(90deg, rgba(0, 217, 255, 0.1) 0%, rgba(123, 44, 191, 0.1) 100%);
+      border-left: 3px solid #00d9ff;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .contact-label {
+      font-size: 12px;
+      color: #7b7b9e;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .contact-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #00d9ff;
+      text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+      letter-spacing: 1px;
+    }
+
+    /* 按钮样式 */
+    .neon-button {
+      background: linear-gradient(90deg, #00d9ff 0%, #7b2cbf 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 10px auto;
+      display: block;
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .neon-button:active {
+      transform: scale(0.98);
+      box-shadow: 0 0 20px rgba(0, 217, 255, 0.8);
+    }
+
+    /* 标签 */
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 5px 5px 5px 0;
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(123, 44, 191, 0.2) 100%);
+      border: 1px solid #00d9ff;
+      color: #00d9ff;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 0 8px rgba(0, 217, 255, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    /* 分割线 */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, #00d9ff 50%, transparent 100%);
+      margin: 20px 0;
+      box-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
+    }
+
+    /* 列表项 */
+    .list-item {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+      color: #b8b8d1;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    /* 高亮文本 */
+    .highlight {
+      color: #00d9ff;
+      font-weight: 700;
+      text-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
+    }
+
+    /* Toast提示 */
+    .toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #00d9ff;
+      padding: 15px 30px;
+      border-radius: 8px;
+      border: 1px solid #00d9ff;
+      box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+      z-index: 9999;
+      display: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .toast.show {
+      display: block;
+      animation: fadeInOut 2s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      90% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ============ 欢迎区域 ============ -->
+    <div class="neon-card">
+      <span class="icon">⚡</span>
+      <div class="title">C++R程序开发</div>
+      <div class="content">提供高质量的代码调试、脚本开发、小程序制作与AI创作服务</div>
+    </div>
+
+    <!-- ============ 联系方式 ============ -->
+    <div class="neon-card">
+      <span class="icon">📞</span>
+      <div class="title">联系方式</div>
+      <div class="content">随时欢迎您的咨询与合作</div>
+    </div>
+
+    <!-- 微信号 -->
+    <div class="neon-card">
+      <div class="subtitle">微信联系</div>
+      <div class="divider"></div>
+
+      <div class="contact-item">
+        <div class="contact-label">微信号</div>
+        <div class="contact-value" id="wechat">LiCr-15</div>
+      </div>
+
+      <button class="neon-button" onclick="copyWechat()">
+        📋 复制微信号
+      </button>
+    </div>
+
+    <!-- 手机号码 -->
+    <div class="neon-card">
+      <div class="subtitle">电话联系</div>
+      <div class="divider"></div>
+
+      <div class="contact-item">
+        <div class="contact-label">手机号码</div>
+        <div class="contact-value">176 8736 8892</div>
+      </div>
+
+      <button class="neon-button" onclick="callPhone()">
+        📱 拨打电话
+      </button>
+    </div>
+
+    <!-- 工作时间 -->
+    <div class="neon-card">
+      <div class="subtitle">工作时间</div>
+      <div class="divider"></div>
+
+      <div class="list-item">
+        <span class="highlight">周一至周五</span> 09:00 - 21:00
+      </div>
+      <div class="list-item">
+        <span class="highlight">周末及节假日</span> 10:00 - 18:00
+      </div>
+      <div class="list-item" style="border-bottom: none; margin-top: 10px; color: #00d9ff; text-align: center;">
+        ⚡ 紧急项目可随时联系
+      </div>
+    </div>
+
+    <!-- ============ 核心业务 ============ -->
+    <div class="neon-card">
+      <div class="subtitle">核心业务</div>
+      <div class="divider"></div>
+
+      <div style="margin-top: 15px;">
+        <span class="tag">💻 代码调试</span>
+        <span class="tag">⚙️ 脚本开发</span>
+        <span class="tag">📱 小程序开发</span>
+        <span class="tag">🤖 AI创作</span>
+      </div>
+    </div>
+
+    <!-- ============ 服务详情 ============ -->
+    <div class="neon-card">
+      <span class="icon">📋</span>
+      <div class="title">服务项目</div>
+    </div>
+
+    <!-- 代码调试服务 -->
+    <div class="service-card">
+      <span class="icon">🔍</span>
+      <div class="service-title">代码调试</div>
+      <div class="service-desc">
+        专业的代码审查与调试服务，快速定位问题，优化代码性能。支持多种编程语言，包括 Python、JavaScript、Java、C++ 等。
+      </div>
+      <div style="margin-top: 10px;">
+        <span class="tag">Bug修复</span>
+        <span class="tag">性能优化</span>
+        <span class="tag">代码重构</span>
+      </div>
+    </div>
+
+    <!-- 脚本开发服务 -->
+    <div class="service-card">
+      <span class="icon">⚙️</span>
+      <div class="service-title">脚本开发</div>
+      <div class="service-desc">
+        自动化脚本定制开发，提升工作效率。包括数据采集、批量处理、自动化运维、定时任务等各类脚本解决方案。
+      </div>
+      <div style="margin-top: 10px;">
+        <span class="tag">自动化</span>
+        <span class="tag">数据处理</span>
+        <span class="tag">爬虫开发</span>
+      </div>
+    </div>
+
+    <!-- 小程序开发服务 -->
+    <div class="service-card">
+      <span class="icon">📱</span>
+      <div class="service-title">小程序开发</div>
+      <div class="service-desc">
+        微信小程序全栈开发，从需求分析到上线发布一站式服务。提供精美UI设计、流畅交互体验和稳定后端支持。
+      </div>
+      <div style="margin-top: 10px;">
+        <span class="tag">定制开发</span>
+        <span class="tag">UI设计</span>
+        <span class="tag">功能扩展</span>
+      </div>
+    </div>
+
+    <!-- AI创作服务 -->
+    <div class="service-card">
+      <span class="icon">🤖</span>
+      <div class="service-title">AI创作</div>
+      <div class="service-desc">
+        利用先进AI技术提供内容创作服务，包括文案撰写、图像生成、智能对话系统、AI工具开发等创新应用。
+      </div>
+      <div style="margin-top: 10px;">
+        <span class="tag">内容生成</span>
+        <span class="tag">智能应用</span>
+        <span class="tag">AI集成</span>
+      </div>
+    </div>
+
+    <!-- ============ 服务流程 ============ -->
+    <div class="neon-card">
+      <div class="subtitle">服务流程</div>
+      <div class="divider"></div>
+
+      <div class="list-item">
+        <span class="highlight">1.</span> 需求沟通 - 详细了解您的需求
+      </div>
+      <div class="list-item">
+        <span class="highlight">2.</span> 方案制定 - 提供专业解决方案
+      </div>
+      <div class="list-item">
+        <span class="highlight">3.</span> 开发实施 - 高效完成项目开发
+      </div>
+      <div class="list-item">
+        <span class="highlight">4.</span> 测试交付 - 确保质量无忧交付
+      </div>
+      <div class="list-item">
+        <span class="highlight">5.</span> 售后支持 - 持续技术支持服务
+      </div>
+    </div>
+
+    <!-- ============ 关于我 ============ -->
+    <div class="neon-card">
+      <span class="icon">👨‍💻</span>
+      <div class="title">关于我</div>
+      <div class="content">
+        资深开发者，专注于提供高质量的技术服务。拥有丰富的项目经验和扎实的技术功底，致力于用技术解决实际问题，为客户创造价值。
+      </div>
+    </div>
+
+    <!-- 技能专长 -->
+    <div class="neon-card">
+      <div class="subtitle">技能专长</div>
+      <div class="divider"></div>
+
+      <div class="service-card">
+        <div class="service-title">💻 编程语言</div>
+        <div style="margin-top: 8px;">
+          <span class="tag">Python</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Java</span>
+          <span class="tag">C/C++</span>
+          <span class="tag">Shell</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-title">🛠️ 开发框架</div>
+        <div style="margin-top: 8px;">
+          <span class="tag">微信小程序</span>
+          <span class="tag">Vue.js</span>
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Django</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-title">🤖 AI技术</div>
+        <div style="margin-top: 8px;">
+          <span class="tag">ChatGPT</span>
+          <span class="tag">AI绘画</span>
+          <span class="tag">机器学习</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Prompt工程</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 服务理念 -->
+    <div class="neon-card">
+      <div class="subtitle">服务理念</div>
+      <div class="divider"></div>
+
+      <div class="list-item">
+        <span class="highlight">专业至上</span> - 用专业技术解决问题
+      </div>
+      <div class="list-item">
+        <span class="highlight">效率优先</span> - 快速响应，按时交付
+      </div>
+      <div class="list-item">
+        <span class="highlight">品质保证</span> - 严格测试，确保质量
+      </div>
+      <div class="list-item">
+        <span class="highlight">客户至上</span> - 用心服务每一位客户
+      </div>
+    </div>
+
+    <!-- 项目经验 -->
+    <div class="neon-card">
+      <div class="subtitle">项目经验</div>
+      <div class="divider"></div>
+
+      <div class="content">
+        • 完成50+ 小程序开发项目<br>
+        • 提供100+ 代码调试与优化服务<br>
+        • 开发200+ 自动化脚本工具<br>
+        • 集成AI技术于多个实际应用<br>
+        • 服务客户遍布全国各地
+      </div>
+    </div>
+
+    <!-- 合作优势 -->
+    <div class="neon-card">
+      <div class="subtitle">合作优势</div>
+      <div class="divider"></div>
+
+      <div style="margin-top: 10px;">
+        <span class="tag">⚡ 快速交付</span>
+        <span class="tag">💎 品质保证</span>
+        <span class="tag">💰 价格合理</span>
+        <span class="tag">🔧 售后无忧</span>
+        <span class="tag">🎯 经验丰富</span>
+        <span class="tag">🚀 技术领先</span>
+      </div>
+    </div>
+
+    <!-- 服务优势 -->
+    <div class="neon-card">
+      <div class="subtitle">为什么选择我</div>
+      <div class="divider"></div>
+
+      <div class="list-item">
+        <span class="highlight">✓</span> 专业技术，多年开发经验
+      </div>
+      <div class="list-item">
+        <span class="highlight">✓</span> 快速响应，高效交付
+      </div>
+      <div class="list-item">
+        <span class="highlight">✓</span> 品质保证，售后无忧
+      </div>
+      <div class="list-item">
+        <span class="highlight">✓</span> 价格合理，性价比高
+      </div>
+    </div>
+
+    <!-- 温馨提示 -->
+    <div class="neon-card">
+      <div class="subtitle">温馨提示</div>
+      <div class="divider"></div>
+
+      <div class="content">
+        • 首次咨询请说明您的具体需求<br>
+        • 提供项目详情可获得更准确的报价<br>
+        • 支持在线沟通，响应迅速<br>
+        • 欢迎长期合作客户
+      </div>
+    </div>
+
+    <!-- 底部装饰 -->
+    <div class="neon-card" style="text-align: center; margin-bottom: 25px;">
+      <div class="content" style="color: #00d9ff; font-size: 12px;">
+        ━━━━━━━━━━━━━━<br>
+        专业 · 高效 · 可靠<br>
+        ━━━━━━━━━━━━━━
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast提示 -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // 显示提示
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    // 复制微信号
+    function copyWechat() {
+      const wechat = 'LiCr-15';
+
+      // 尝试使用现代API
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(wechat).then(() => {
+          showToast('微信号已复制');
+        }).catch(() => {
+          fallbackCopy(wechat);
+        });
+      } else {
+        fallbackCopy(wechat);
+      }
+    }
+
+    // 备用复制方法
+    function fallbackCopy(text) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        document.execCommand('copy');
+        showToast('微信号已复制');
+      } catch (err) {
+        showToast('复制失败，请手动复制');
+      }
+
+      document.body.removeChild(textarea);
+    }
+
+    // 拨打电话
+    function callPhone() {
+      window.location.href = 'tel:17687368892';
+    }
+
+    // 阻止页面缩放（移动端）
+    document.addEventListener('gesturestart', function(e) {
+      e.preventDefault();
+    });
+  </script>
+</body>
+</html>
